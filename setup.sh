@@ -17,8 +17,12 @@ pip install --upgrade pip
 pip install --upgrade virtualenv
 
 # install ratebeer (& depens) and pymongo
+apt-get install -y libffi-dev
+apt-get install -y libssl-dev
+
 pip install requests
 pip install beautifulsoup4
 pip install lxml
 git clone https://github.com/alilja/ratebeer
+python ratebeer/setup.py install
 pip install pymongo
