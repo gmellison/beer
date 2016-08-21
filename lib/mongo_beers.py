@@ -12,6 +12,7 @@ rb = ratebeer.RateBeer()
 for i in range(443552):
     try:
         beer = rb.beer('/beer/{0}/'.format(i))
+        beer['brewery'] = beer['brewery'].url
         db_beers.insert_one(beer)
 
     except:
