@@ -14,7 +14,7 @@ for i in range(443552):
         beer = rb.beer('/beer/{0}/'.format(i))
         db_beers.insert_one(beer)
 
-    except PageNotFound:
+    except:
         continue
 
     # get sleep time from exponential distribution
