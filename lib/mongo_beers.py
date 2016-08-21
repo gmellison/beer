@@ -1,4 +1,4 @@
-0o;9import pymongo
+import pymongo
 import ratebeer
 import time
 import scipy.stats
