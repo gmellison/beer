@@ -1,4 +1,4 @@
-import pymongo
+0o;9import pymongo
 import ratebeer
 import time
 import scipy.stats
@@ -13,7 +13,7 @@ for i in range(443552):
     try:
         beer = rb.beer('/beer/{0}/'.format(i))
         beer['brewery'] = beer['brewery'].url
-        db_beers.insert_one(beer)
+        beer_collection.insert_one(beer)
 
     except:
         continue
