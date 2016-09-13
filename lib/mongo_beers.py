@@ -18,15 +18,28 @@ for i in range(121952, 443552):
         beer_collection.insert_one(beer)
 
     except:
+        # count the exception
+        e += 1
         continue
         e += 1
     n += 1
 
     # get sleep time from exponential distribution
-    sleep_time = scipy.stats.expon.rvs() * .75
 
     # every once in a while, sleep longer (I want to be nice to their servers...).
-    if i % 500 == 0:
-	print 'ingested {0} messages, time for a quick nap'.format(n - e)
-        sleep_time = 40 + sleep_time
+    if i % 100 == 0:
+        sleep_time = 60 + sleep_time
+        print('ingested {0} messages, time for a quick nap. \n'.format(i - e))
+        print('{0} elapsed so far'.format(s))
+
     time.sleep(sleep_time)
+    s += sleep_time
+
+
+# find max beer id
+m = 0
+for beer in beers.find():
+    url = beer['url']
+    bid = int(url[6:len(url) - 1])
+    if bid > m:
+        m = bid
