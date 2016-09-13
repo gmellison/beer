@@ -33,3 +33,12 @@ for i in range(443552):
 
     time.sleep(sleep_time)
     s += sleep_time
+
+
+# find max beer id
+m = 0
+for beer in beers.find():
+    url = beer['url']
+    bid = int(url[6:len(url) - 1])
+    if bid > m:
+        m = bid
