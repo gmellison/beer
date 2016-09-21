@@ -1,17 +1,15 @@
 import bs4 as bs
 import requests
 import pymongo
-import selenium.webdriver
+import selenium.webdriver as webdriver
 import time
 from math import ceil
+import scipy.stats
+from pyvirtualdisplay import Display
 
-html = requests.get('http://ratebeer.com/user/3/beer-ratings/1/')
-soup = bs.BeautifulSoup(html.content, 'html.parser')
-
-bio = soup.find()
 
 def get_browser():
-    browser = webdriver.Chrome()
+    browser = webdriver.Firefox()
     time.sleep(2)
     return browser
 
@@ -30,7 +28,7 @@ def get_user_reviews(user_i, browser):
     if nratings == 0:
         return None
 
-    n_pages = int(math.ceil(int(nratings) / 50.0))
+    n_pages = int(ceil(int(nratings) / 50.0))
 
     def page_url(page_i):
         return base_url + 'beer-ratings/{0}/'.format(page_i)
@@ -57,8 +55,28 @@ def get_user_reviews(user_i, browser):
     return user
 
 if __name__ == '__main__':
+    
+    display = Display(visible=0, size=(800, 600))
+    display.start()
 
-    try
+    client = pymongo.MongoClient()
+    db = client['beer_db']
+    user_collection = db['users']
+    
+    u = 0
 
+    browser = get_browser()
+     
     for user_id in range(1, 427405):
-        user_reviews = get_user_reviews()
+
+        sleep_time = scipy.stats.expon.rvs() * 3.0
+        time.sleep(sleep_time)
+        user_reviews = get_user_reviews(user_id, browser)
+
+        user_collection.insert_one(user_reviews)
+        u += 1
+        if u % 500 == 0:
+            print 'ingested {0} users'.format(u)
+
+
+
