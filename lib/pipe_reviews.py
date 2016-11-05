@@ -8,12 +8,12 @@ import time
 db = pymongo.MongoClient()['beer_db']['reviews']
 
 ratebeer = rb.RateBeer()
-max_beer = 443552
+max_beer = 450000
 
 n_ratings = 0
 
 
-for beer_id in range(4, max_beer + 1):
+for beer_id in range(55699, max_beer + 1):
     
     try:
 	beer_props = ratebeer.beer('/beer/{0}/'.format(beer_id))
