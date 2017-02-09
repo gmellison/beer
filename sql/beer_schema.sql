@@ -1,7 +1,10 @@
-DROP TABLE IF EXISTS beers;
-CREATE TABLE beers (
-  beer_id integer,
-  beer_name varchar(20),
+DROP SCHEMA IF EXISTS rate_beer CASCADE;
+CREATE SCHEMA rate_beer;
+
+DROP TABLE IF EXISTS rate_beer.beers;
+CREATE TABLE rate_beer.beers (
+  beer_id integer PRIMARY KEY,
+  beer_name text,
   brewery_id integer,
   style_id integer,
   overall_rating real,
@@ -13,45 +16,45 @@ CREATE TABLE beers (
   calories real,
   ibu real,
   retired boolean,
-  seasonal boolean,
-  time_inserted timestamp,
-  tags varchar(10)[],
+  seasonal text,
+  tags text[],
   description text
 );
 
-DROP TABLE IF EXISTS styles;
-CREATE TABLE STYLES (
-  stlye_id integer,
-  style_name varchar(15)
+DROP TABLE IF EXISTS rate_beer.styles;
+CREATE TABLE rate_beer.styles (
+  style_id integer PRIMARY KEY,
+  style_name text 
 );
 
-DROP TABLE IF EXISTS users;
-CREATE TABLE users (
-  user_id integer,
-  user_name varchar(20),
-  user_location varchar(20)
+DROP TABLE IF EXISTS rate_beer.users;
+CREATE TABLE rate_beer.users (
+  user_id SERIAL PRIMARY KEY,
+  user_name text UNIQUE, 
+  user_location text 
 );
 
-
-DROP TABLE IF EXISTS reviews;
-CREATE TABLE reviews (
+DROP TABLE IF EXISTS rate_beer.reviews;
+CREATE TABLE rate_beer.reviews (
   beer_id integer,
   user_id integer,
   overall integer,
   appearance integer,
   aroma integer,
   taste integer,
+  palate integer,
   review_date date,
-  review_text text
+  review_text text,
+  PRIMARY KEY (beer_id, user_id)
 );
 
-DROP TABLE IF EXISTS breweries;
-CREATE TABLE breweries (
-  brewery_name varchar(30),
-  brewery_id integer,
-  city varchar(20),
-  country varchar(15),
-  postal_code varchar(15),
-  state varchar(12),
-  brewery_type varchar(10)
+DROP TABLE IF EXISTS rate_beer.breweries;
+CREATE TABLE rate_beer.breweries (
+  brewery_id integer PRIMARY KEY,
+  brewery_name text,
+  city text,
+  country text,
+  postal_code text, 
+  state text,
+  brewery_type text
 );
